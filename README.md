@@ -2,40 +2,20 @@
  
 - Docker configuration files for building and orchestrate Apache Airflow and Pyspark Containers
 - Configuration files for the project
-- A folder called "ejericio1" holding files for an ETL job making use of Airflow and Pyspark. 
+- A folder called "ejericio1" holding files for an ETL job making use of Airflow and Pyspark 
 
 ## ETL Structure
 
 The ETL project structure is as follows: 
 
-- `raw`: The original, immutable data dump.
-- `interim`: Intermediate data that has been transformed.
-- `processed`: The final, data sets to be uploaded to the datalake.
+- `raw`: The original, immutable data dump
+- `interim`: Intermediate data that has been transformed
+- `processed`: The final, data sets to be uploaded to the datalake
 - `helpers` : Helpers for the development workflow 
 - `libs`: Objects to be used within the ETL process
 - `tasks`: The ETL tasks
 - `my_etl.py`: An airflow DAG to orchestrate the ETL process
 
-## Airflow  
-
-
-## Directory Structure for Jobs
-Ensure your Spark job files are placed in the following directories and are accessible to the Airflow container:
-
-* Python job: jobs/python/
-
-These paths should be relative to the mounted Docker volume for Airflow DAGs.
-
-## Usage
-After the Docker environment is set up, the `my_etl` DAG will be available in the Airflow web UI [localhost:8080](localhost:8080), where it can be triggered.
-
-### The DAG will execute the following steps:
-* Print "Jobs started" in the Airflow logs.
-* Submit the Python Spark job to the Spark cluster.
-* Print "Jobs completed successfully" in the Airflow logs after all jobs have finished.
-
-### Note:
-You must add the spark cluster url to the spark connection in the configuration on Airflow UI.
 
 # Set up
 In this section we describe the steps towards building the containes as well as configuring spark
@@ -92,14 +72,27 @@ docker ps | grep airflow-pyspark-spark-master
 Encuentra el número de puerto, situado a la derecha de la flecha. Ejemplo:
 ![Screenshot](readme_images/5_find_port.png)
 
-Escribe este último número en la casilla de "Puerto"
-![Screenshot](readme_images/6_write_port.png)
-
-Finalmente, guarda la conección haciendo click sobre "Save"
-![Screenshot](readme_images/7_save_connection.png)
+Escribe este último número en la casilla de "Puerto", y finalmente, guarda la conección haciendo click sobre "Save"
+![Screenshot](readme_images/6_write_port_and_save_connection.png)
 
 Now, you can trigger a DAG
-![Screenshot](readme_images/8_trigger_dag.png)
+![Screenshot](readme_images/7_trigger_dag.png)
+
+
+## Directory Structure for Jobs
+Ensure your Spark job files are placed in the following directories and are accessible to the Airflow container:
+
+* Python job: jobs/python/
+
+These paths should be relative to the mounted Docker volume for Airflow DAGs.
+
+## Usage
+After the Docker environment is set up, the `my_etl` DAG will be available in the Airflow web UI [localhost:8080](localhost:8080), where it can be triggered.
+
+### The DAG will execute the following steps:
+* Print "Jobs started" in the Airflow logs.
+* Submit the Python Spark job to the Spark cluster.
+* Print "Jobs completed successfully" in the Airflow logs after all jobs have finished.
 
 
 Special BIG THANKS to https://github.com/airscholar 
