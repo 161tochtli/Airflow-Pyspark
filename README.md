@@ -52,13 +52,58 @@ To run this project using Docker, follow these steps:
 
 1. Clone this repository to your local machine.
 2. Navigate to the folder of the repo.
-3. Build and run the containers using Docker Compose:
+3. Before step 4, you should grant 
+4. Build and run the containers using Docker Compose:
 
 ```bash
 docker-compose up -d --build
 ```
 
-Special THANK YOU to https://github.com/airscholar 
+The container holding airflow webserver will fail in the first run, so do the following:
+1. Find the container holding airflow webserver
+```bash
+docker ps -a | grep airflow-pyspark-webserver
+```
+2. Copy the first number (the container id), replace the placeholder (container_id) below and run the command:
+```bash
+docker restart container_id
+```
+
+## Airflow Setup
+For this step, we will connect Airflow and Spark.
+
+Go to "Admin" tab
+![Screenshot](readme_images/1_admin.png)
+
+Click on "Connections" options
+![Screenshot](readme_images/2_connections.png)
+
+Click on the add symbol
+![Screenshot](readme_images/3_add_connection.png)
+
+Fill connection with the required info, use the info from the image.
+![Screenshot](readme_images/4_fill_connection.png)
+
+For Port, you should find wich port is airflow webserver listening. For this, execute
+
+```bash
+docker ps | grep airflow-pyspark-spark-master
+```
+Encuentra el número de puerto, situado a la derecha de la flecha. Ejemplo:
+![Screenshot](readme_images/5_find_port.png)
+
+Escribe este último número en la casilla de "Puerto"
+![Screenshot](readme_images/6_write_port.png)
+
+Finalmente, guarda la conección haciendo click sobre "Save"
+![Screenshot](readme_images/7_save_connection.png)
+
+Now, you can trigger a DAG
+![Screenshot](readme_images/8_trigger_dag.png)
+
+
+Special BIG THANKS to https://github.com/airscholar 
+
 Ideas from:
 https://github.com/airscholar/SparkingFlow
 https://github.com/drivendata/cookiecutter-data-science
